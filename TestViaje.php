@@ -27,13 +27,14 @@ include './Viaje.php';
 include './Pasajeros.php';
 include './ResponsableV.php';
 
-do {
+do { //menu de opciones
     echo "Bienvenido, por favor elija una opción: \n";
     echo "1. Ingresar un nuevo viaje \n";
     echo "2. Modificar un viaje existente \n";
     echo "3. Ver un viaje existente \n";
     echo "4. Salir \n";
     $opcionMenu = trim(fgets(STDIN));
+    //controlar que la opción elegida sea un número válido
     $valOpcionMenu = is_numeric($opcionMenu);
     while ($opcionMenu <= 0 || $opcionMenu > 4 || !$valOpcionMenu) {
         echo "ingrese un número: ";
@@ -42,9 +43,10 @@ do {
 
 
     switch ($opcionMenu) {
-        case 1:
+        case 1: //cargar un viaje nuevo
             echo "ingrese los datos de su viaje:\n";
             echo "Código del viaje: ";
+            //Se crea el objeto Viaje sin datos para poder agregarle nuevos
             $objViaje = new Viaje(null, null, null, null, null);
             $objViaje->setCodigoViaje(trim(fgets(STDIN)));
             echo "Destino del viaje: ";
@@ -59,9 +61,10 @@ do {
                 $cantidadMaxP = $objViaje->getCantidadMaxPasajeros();
                 $valMaxP = is_numeric($cantidadMaxP);
             }
+            //Se crea el objeto Pasajeros sin datos, luego se ingresan.
             $objPasajeros = new Pasajeros(null, null, null, null);
             for ($iteraMaxP = 0; $iteraMaxP < $cantidadMaxP; $iteraMaxP++) {
-                do {
+                //do { //filtro pasajero repetido --- NO FUNCIONA :/
                     echo "Datos del pasajero: \n";
                     echo "Nombre: ";
                     $nombrePa = trim(fgets(STDIN));
@@ -71,25 +74,63 @@ do {
                     $objPasajeros->setApellidoPasajero($apellidoPa);
                     echo "Número de documento: ";
                     $documentoPa = trim(fgets(STDIN));
-                    $controlRepeticion = $objPasajeros->revisarPasajeroRepetido($documentoPa);
-                    if ($controlRepeticion == false) {
+                    //$controlRepeticion = $objPasajeros->revisarPasajeroRepetido($documentoPa);
+                    $objPasajeros->setDocumentoPasajero($documentoPa);
+                    echo "Teléfono de contacto: ";
+                    $telefonoPa = trim(fgets(STDIN));
+                    $objPasajeros->setTelefonoPasajero($telefonoPa);
+                    $pasajeroActual = $objPasajeros->datosPasajeros();
+                    $objPasajeros->almacenaDatosPasajeros($pasajeroActual);
+                    /*if ($controlRepeticion == true) {
                         echo "El pasajero ya existe, por favor ingrese uno distinto: \n";
                     }
-                } while (!$controlRepeticion);
-                $objPasajeros->setDocumentoPasajero($documentoPa);
-                echo "Teléfono de contacto: ";
-                $telefonoPa = trim(fgets(STDIN));
-                $objPasajeros->setTelefonoPasajero($telefonoPa);
-                $pasajeroActual = $objPasajeros->datosPasajeros();
-                $objPasajeros->almacenaDatosPasajeros($pasajeroActual);
+                } while ($controlRepeticion);*/
+                    $listaPasajeros = $objPasajeros->getBaseDatosPasajero();
             }
-            print_r($objPasajeros->datosPasajeros());
+            /*print_r($objPasajeros->datosPasajeros());
             print_r($objPasajeros->getBaseDatosPasajero());
+            echo "\n" . count($objPasajeros->getBaseDatosPasajero()) . "\n";
+            Prueba de resultados incorporados al array y cantidad de elementos en array*/
+
+            //añade datos de objeto Pasajeros a objeto Viaje
+            $pasajeroViaje = $objViaje->setObjPasajeros($listaPasajeros);
+
+            //Se crea el objeto ResponsableV sin datos, pensado para agregar
+            $objResponsable = new ResponsableV(null, null, null, null);
+            echo "Datos del responsable: \n";
+            echo "Nombre: ";
+            $nombreRe = trim(fgets(STDIN));
+            $objResponsable->setNombreResponsable($nombreRe);
+            echo "Apellido: ";
+            $apellidoRe = trim(fgets(STDIN));
+            $objResponsable->setApellidoResponsable($apellidoRe);
+            echo "Número de identificación: ";
+            $documentoRe = trim(fgets(STDIN));
+            $objResponsable->setNumeroResponsable($documentoRe);
+            echo "Teléfono de contacto: ";
+            $telefonoRe = trim(fgets(STDIN));
+            $objResponsable->setLicenciaResponsable($telefonoRe);
+            $responsableActual = $objResponsable->datosResponsable();
+            $objResponsable->almacenaDatosResponsable($responsableActual);
+            $listaResponsable= $objResponsable->getBaseDatosResponsable();
+            /*print_r($objResponsable->datosResponsable());
+            print_r($objResponsable->getBaseDatosResponsable());
+            echo "\n" . count($objResponsable->getBaseDatosResponsable()) . "\n";
+            Prueba de resultados incorporados al array y cantidad de elementos en array*/
+
+            //añade datos de objeto ResponsableV a objeto Viaje
+            $responsableViaje = $objViaje->setObjResponsableV($listaResponsable);
+
+            //almacena el viaje completo
+            $viajeCreado = $objViaje->datosViaje();
+            $viajeAlmacenado = $objViaje->almacenarDistintosViajes($viajeCreado);
             break;
         case 2:
+            
             break;
         case 3:
-
+            echo "\n Los datos del viaje son: \n";
+            print_r($objViaje->getBaseDatosViaje());
             break;
     }
 } while ($opcionMenu <> 4);

@@ -3,75 +3,87 @@ class ResponsableV
 {
 
     //Atributos
-    private $nombreEmpleado;
-    private $apellidoEmpleado;
-    private $numeroEmpleado;
-    private $licenciaEmpleado;
+    private $nombreResponsable;
+    private $apellidoResponsable;
+    private $numeroResponsable;
+    private $licenciaResponsable;
+    private $baseDatosResponsable;
 
     //Constructor clase ResponsableV
-    public function __construct($nomEmp, $apeEmp, $numEmp, $licEmp)
+    public function __construct($nomRes, $apeRes, $numRes, $licRes)
     {
-        $this->nombreEmpleado = $nomEmp;
-        $this->apellidoEmpleado = $apeEmp;
-        $this->numeroEmpleado = $numEmp;
-        $this->licenciaEmpleado = $licEmp;
+        $this->nombreResponsable = $nomRes;
+        $this->apellidoResponsable = $apeRes;
+        $this->numeroResponsable = $numRes;
+        $this->licenciaResponsable = $licRes;
+        $this->baseDatosResponsable = array();
     }
 
     //Getters
-    public function getNombreEmpleado()
+    public function getNombreResponsable()
     {
-        return $this->nombreEmpleado;
+        return $this->nombreResponsable;
     }
-    public function getApellidoEmpleado()
+    public function getApellidoResponsable()
     {
-        return $this->apellidoEmpleado;
+        return $this->apellidoResponsable;
     }
-    public function getNumeroEmpleado()
+    public function getNumeroResponsable()
     {
-        return $this->numeroEmpleado;
+        return $this->numeroResponsable;
     }
-    public function getLicenciaEmpleado()
+    public function getLicenciaResponsable()
     {
-        return $this->licenciaEmpleado;
+        return $this->licenciaResponsable;
+    }
+    public function getBaseDatosResponsable()
+    {
+        return $this->baseDatosResponsable;
     }
 
     //Setters
-    public function setNombreEmpleado($nombreEmpleado)
+    public function setNombreResponsable($nombreResponsable)
     {
-        $this->nombreEmpleado = $nombreEmpleado;
+        $this->nombreResponsable = $nombreResponsable;
     }
-    public function setApellidoEmpleado($apellidoEmpleado)
+    public function setApellidoResponsable($apellidoResponsable)
     {
-        $this->apellidoEmpleado = $apellidoEmpleado;
+        $this->apellidoResponsable = $apellidoResponsable;
     }
-    public function setNumeroEmpleado($numeroEmpleado)
+    public function setNumeroResponsable($numeroResponsable)
     {
-        $this->numeroEmpleado = $numeroEmpleado;
+        $this->numeroResponsable = $numeroResponsable;
     }
-    public function setLicenciaEmpleado($licenciaEmpleado)
+    public function setLicenciaResponsable($licenciaResponsable)
     {
-        $this->licenciaEmpleado = $licenciaEmpleado;
+        $this->licenciaResponsable = $licenciaResponsable;
+    }
+    public function setBaseDatosResponsable($baseDatosResponsable)
+    {
+        $this->baseDatosResponsable = $baseDatosResponsable;
     }
 
     //Arreglo con datos de responsables
-    public function ingresoDatosResponsable()
+    public function datosResponsable()
     {
 
         $responsablesViajes = [
-            [
-                "nombre" => $this->getNombreEmpleado(),
-                "apellido" => $this->getApellidoEmpleado(),
-                "numero" => $this->getNumeroEmpleado(),
-                "licencia" => $this->getLicenciaEmpleado()
-            ]
+
+            "nombre" => $this->getNombreResponsable(),
+            "apellido" => $this->getApellidoResponsable(),
+            "numero" => $this->getNumeroResponsable(),
+            "licencia" => $this->getLicenciaResponsable()
+
         ];
 
         return $responsablesViajes;
     }
 
-    public function revisionRepeticionResponsable()
+    public function almacenaDatosResponsable($respIng)
     {
-
-        $tablaRevision = $this->ingresoDatosResponsable();
+        $baseDatosFinalResp = $this->getBaseDatosResponsable();
+        array_push($baseDatosFinalResp, $respIng);
+        $this->setBaseDatosResponsable($baseDatosFinalResp);
+        return $baseDatosFinalResp;
     }
 }

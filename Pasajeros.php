@@ -80,23 +80,26 @@ class Pasajeros
 
     public function almacenaDatosPasajeros($pasIng)
     {
-        $baseDatosCompleta = $this->getBaseDatosPasajero();
-        array_push($baseDatosCompleta, $pasIng);
-        $this->setBaseDatosPasajero($baseDatosCompleta);
-        return $baseDatosCompleta;
+        $baseDatosFinalPasajero = $this->getBaseDatosPasajero();
+        array_push($baseDatosFinalPasajero, $pasIng);
+        $this->setBaseDatosPasajero($baseDatosFinalPasajero);
+        return $baseDatosFinalPasajero;
     }
 
     public function revisarPasajeroRepetido($dniRepe)
     {
         $pasajRevision = $this->getBaseDatosPasajero();
         $cantidadPasajeros = count($pasajRevision);
-        $repetidoDni = true;
+        $repetidoDni = false;
         $recoDni = 0;
-        while ($recoDni > $cantidadPasajeros && $repetidoDni) {
+        while ($recoDni > $cantidadPasajeros && !$repetidoDni) {
             if ($pasajRevision[$recoDni]["documento"] == $dniRepe) {
                 $repetidoDni = false;
+            } elseif ($cantidadPasajeros == 1) {
+                $repetidoDni = false;
             } else {
-                $recoDni=$recoDni+1;
+                $recoDni = $recoDni + 1;
+                $repetidoDni = true;
             }
         }
         return $repetidoDni;

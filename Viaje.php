@@ -7,6 +7,7 @@ class Viaje
     private $cantidadMaxPasajeros;
     private $objPasajeros;
     private $objResponsableV;
+    private $baseDatosViaje;
 
     //Construct clase Viaje
     public function __construct($codViaje, $destViaje, $cantMaxPasa, $objPasa, $objRespV)
@@ -16,7 +17,7 @@ class Viaje
         $this->cantidadMaxPasajeros = $cantMaxPasa;
         $this->objPasajeros = $objPasa;
         $this->objResponsableV = $objRespV;
-
+        $this->baseDatosViaje = array();
     }
 
     //Getters
@@ -40,6 +41,10 @@ class Viaje
     {
         return $this->objResponsableV;
     }
+    public function getBaseDatosViaje()
+    {
+        return $this->baseDatosViaje;
+    }
 
     //Setters
     public function setCodigoViaje($codigoViaje)
@@ -54,7 +59,7 @@ class Viaje
     {
         $this->cantidadMaxPasajeros = $cantidadMaxPasajeros;
     }
-    public function setgetObjPasajeros($objPasajeros)
+    public function setObjPasajeros($objPasajeros)
     {
         $this->objPasajeros = $objPasajeros;
     }
@@ -62,4 +67,43 @@ class Viaje
     {
         $this->objResponsableV = $objResponsableV;
     }
+    public function setBaseDatosViaje($BaseDatosViaje)
+    {
+        $this->baseDatosViaje = $BaseDatosViaje;
+    }
+
+    //métodos
+    public function datosViaje()
+    {
+        $datosViaje =
+            [
+                "Código" => $this->getCodigoViaje(),
+                "Destino" => $this->getDestinoViaje(),
+                "Cantidad de pasajeros" => $this->getCantidadMaxPasajeros(),
+                "Pasajeros" => $this->getObjPasajeros(),
+                "Responsable" => $this->getObjResponsableV()
+            ];
+
+        return $datosViaje;
+    }
+    public function almacenarDistintosViajes($viajesCreados)
+    {
+        $baseDatosFinalViaje = $this->getBaseDatosViaje();
+        array_push($baseDatosFinalViaje, $viajesCreados);
+        $this->setBaseDatosViaje($baseDatosFinalViaje);
+        return $baseDatosFinalViaje;
+    }
+
+    /*public function __toString()
+    {
+        $viajesParaMostrar = $this->getBaseDatosViaje();
+        $ind = 0;
+        $CDC = 3;
+        $CoDeCa = array();
+        for ($ind; $ind < $CDC; $ind++) {
+            $CoDeCa[$ind] = $viajesParaMostrar[$ind];
+        }
+        $mensajeCoDeCa = implode(", ",$CoDeCa);
+        return $mensajeCoDeCa;
+    }*/
 }
