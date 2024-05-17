@@ -7,7 +7,6 @@ class ResponsableV
     private $apellidoResponsable;
     private $numeroResponsable;
     private $licenciaResponsable;
-    private $baseDatosResponsable;
 
     //Constructor clase ResponsableV
     public function __construct($nomRes, $apeRes, $numRes, $licRes)
@@ -16,7 +15,6 @@ class ResponsableV
         $this->apellidoResponsable = $apeRes;
         $this->numeroResponsable = $numRes;
         $this->licenciaResponsable = $licRes;
-        $this->baseDatosResponsable = array();
     }
 
     //Getters
@@ -36,10 +34,6 @@ class ResponsableV
     {
         return $this->licenciaResponsable;
     }
-    public function getBaseDatosResponsable()
-    {
-        return $this->baseDatosResponsable;
-    }
 
     //Setters
     public function setNombreResponsable($nombreResponsable)
@@ -58,32 +52,21 @@ class ResponsableV
     {
         $this->licenciaResponsable = $licenciaResponsable;
     }
-    public function setBaseDatosResponsable($baseDatosResponsable)
+
+    /* Método __toString
+    * 
+    * @return
+    * */
+    public function __toString()
     {
-        $this->baseDatosResponsable = $baseDatosResponsable;
-    }
+        //$mensaje  string
 
-    //Arreglo con datos de responsables
-    public function datosResponsable()
-    {
+        $mensaje = "Responsable del viaje:".
+        "\nNombre: " . $this->getNombreResponsable() .
+            "\nApellido: " . $this->getApellidoResponsable() .
+            "\nNumero de empleado: " . $this->getNumeroResponsable() .
+            "\nNúmero de licencia: " . $this->getLicenciaResponsable() . "\n";
 
-        $responsablesViajes = [
-
-            "nombre" => $this->getNombreResponsable(),
-            "apellido" => $this->getApellidoResponsable(),
-            "numero" => $this->getNumeroResponsable(),
-            "licencia" => $this->getLicenciaResponsable()
-
-        ];
-
-        return $responsablesViajes;
-    }
-
-    public function almacenaDatosResponsable($respIng)
-    {
-        $baseDatosFinalResp = $this->getBaseDatosResponsable();
-        array_push($baseDatosFinalResp, $respIng);
-        $this->setBaseDatosResponsable($baseDatosFinalResp);
-        return $baseDatosFinalResp;
+        return $mensaje;
     }
 }

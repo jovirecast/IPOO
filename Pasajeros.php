@@ -1,5 +1,5 @@
 <?php
-class Pasajeros
+class Pasajero
 {
 
     //atributos
@@ -7,7 +7,6 @@ class Pasajeros
     private $apellidoPasajero;
     private $documentoPasajero;
     private $telefonoPasajero;
-    private $baseDatosPasajero;
 
     //Constructor clase Pasajeros
     public function __construct($nomPasaj, $apelPasaj, $docuPasaj, $telePasaj)
@@ -16,7 +15,6 @@ class Pasajeros
         $this->apellidoPasajero = $apelPasaj;
         $this->documentoPasajero = $docuPasaj;
         $this->telefonoPasajero = $telePasaj;
-        $this->baseDatosPasajero = array();
     }
 
     //Getters
@@ -36,11 +34,6 @@ class Pasajeros
     {
         return $this->telefonoPasajero;
     }
-    public function getBaseDatosPasajero()
-    {
-        return $this->baseDatosPasajero;
-    }
-
 
     //Setters
     public function setNombrePasajero($nombrePasajero)
@@ -59,49 +52,22 @@ class Pasajeros
     {
         $this->telefonoPasajero = $telefonoPasajero;
     }
-    public function setBaseDatosPasajero($baseDatosPasajero)
+
+        /* Método __toString
+    * 
+    * @return
+    * */
+    public function __toString()
     {
-        $this->baseDatosPasajero = $baseDatosPasajero;
+        //$mensaje  string
+
+        $mensaje = "\nDatos del pasajero:".
+        "\nNombre: " . $this->getNombrePasajero() .
+            "\nApellido: " . $this->getApellidoPasajero() .
+            "\nNumero de documento: " . $this->getDocumentoPasajero() .
+            "\nTeléfono: " . $this->getTelefonoPasajero() . "\n";
+
+        return $mensaje;
     }
 
-    //Arreglos con datos de pasajeros
-    public function datosPasajeros()
-    {
-        $datosPasajeros =
-            [
-                "nombre" => $this->getNombrePasajero(),
-                "apellido" => $this->getApellidoPasajero(),
-                "documento" => $this->getDocumentoPasajero(),
-                "telefono" => $this->getTelefonoPasajero()
-            ];
-
-        return $datosPasajeros;
-    }
-
-    public function almacenaDatosPasajeros($pasIng)
-    {
-        $baseDatosFinalPasajero = $this->getBaseDatosPasajero();
-        array_push($baseDatosFinalPasajero, $pasIng);
-        $this->setBaseDatosPasajero($baseDatosFinalPasajero);
-        return $baseDatosFinalPasajero;
-    }
-
-    public function revisarPasajeroRepetido($dniRepe)
-    {
-        $pasajRevision = $this->getBaseDatosPasajero();
-        $cantidadPasajeros = count($pasajRevision);
-        $repetidoDni = false;
-        $recoDni = 0;
-        while ($recoDni > $cantidadPasajeros && !$repetidoDni) {
-            if ($pasajRevision[$recoDni]["documento"] == $dniRepe) {
-                $repetidoDni = false;
-            } elseif ($cantidadPasajeros == 1) {
-                $repetidoDni = false;
-            } else {
-                $recoDni = $recoDni + 1;
-                $repetidoDni = true;
-            }
-        }
-        return $repetidoDni;
-    }
 }

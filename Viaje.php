@@ -5,19 +5,18 @@ class Viaje
     private $codigoViaje;
     private $destinoViaje;
     private $cantidadMaxPasajeros;
-    private $objPasajeros;
+    private $colObjPasajeros;
     private $objResponsableV;
-    private $baseDatosViaje;
+
 
     //Construct clase Viaje
-    public function __construct($codViaje, $destViaje, $cantMaxPasa, $objPasa, $objRespV)
+    public function __construct($codViaje, $destViaje, $cantMaxPasa, $colObjPasa, $objRespV)
     {
         $this->codigoViaje = $codViaje;
         $this->destinoViaje = $destViaje;
         $this->cantidadMaxPasajeros = $cantMaxPasa;
-        $this->objPasajeros = $objPasa;
+        $this->colObjPasajeros = $colObjPasa;
         $this->objResponsableV = $objRespV;
-        $this->baseDatosViaje = array();
     }
 
     //Getters
@@ -33,18 +32,15 @@ class Viaje
     {
         return $this->cantidadMaxPasajeros;
     }
-    public function getObjPasajeros()
+    public function getColObjPasajeros()
     {
-        return $this->objPasajeros;
+        return $this->colObjPasajeros;
     }
     public function getObjResponsableV()
     {
         return $this->objResponsableV;
     }
-    public function getBaseDatosViaje()
-    {
-        return $this->baseDatosViaje;
-    }
+
 
     //Setters
     public function setCodigoViaje($codigoViaje)
@@ -59,51 +55,90 @@ class Viaje
     {
         $this->cantidadMaxPasajeros = $cantidadMaxPasajeros;
     }
-    public function setObjPasajeros($objPasajeros)
+    public function setColObjPasajeros($colObjPasajeros)
     {
-        $this->objPasajeros = $objPasajeros;
+        $this->colObjPasajeros = $colObjPasajeros;
     }
     public function setObjResponsableV($objResponsableV)
     {
         $this->objResponsableV = $objResponsableV;
     }
-    public function setBaseDatosViaje($BaseDatosViaje)
-    {
-        $this->baseDatosViaje = $BaseDatosViaje;
-    }
 
     //métodos
-    public function datosViaje()
-    {
-        $datosViaje =
-            [
-                "Código" => $this->getCodigoViaje(),
-                "Destino" => $this->getDestinoViaje(),
-                "Cantidad de pasajeros" => $this->getCantidadMaxPasajeros(),
-                "Pasajeros" => $this->getObjPasajeros(),
-                "Responsable" => $this->getObjResponsableV()
-            ];
 
-        return $datosViaje;
-    }
-    public function almacenarDistintosViajes($viajesCreados)
+    /* Método para incorprar los datos de un pasajero
+    * 
+    * @return 
+    * */
+    public function ingresarPasajeros($datosPasajero)
     {
-        $baseDatosFinalViaje = $this->getBaseDatosViaje();
-        array_push($baseDatosFinalViaje, $viajesCreados);
-        $this->setBaseDatosViaje($baseDatosFinalViaje);
-        return $baseDatosFinalViaje;
-    }
+        $cantidad = $this->getCantidadMaxPasajeros();
 
-    /*public function __toString()
-    {
-        $viajesParaMostrar = $this->getBaseDatosViaje();
-        $ind = 0;
-        $CDC = 3;
-        $CoDeCa = array();
-        for ($ind; $ind < $CDC; $ind++) {
-            $CoDeCa[$ind] = $viajesParaMostrar[$ind];
+        $arregloPasajeros = [];
+        for ($i = 1; $i <= $cantidad; $i++) {
+            $pasajero = new Pasajero(null, null, null, null);
+            $pasajero->setNombrePasajero($datosPasajero[$i][0]);
+            $pasajero->setApellidoPasajero($datosPasajero[$i][1]);
+            $pasajero->setDocumentoPasajero($datosPasajero[$i][2]);
+            $pasajero->setTelefonoPasajero($datosPasajero[$i][3]);
+            array_push($arregloPasajeros, $pasajero);
         }
-        $mensajeCoDeCa = implode(", ",$CoDeCa);
-        return $mensajeCoDeCa;
-    }*/
+        $this->setColObjPasajeros($arregloPasajeros);
+    }
+
+    /* Método para incorprar los datos de un pasajero
+    * 
+    * @return 
+    * */
+    public function ingresarResponsable($datosResponsable)
+    {
+        $responsableV = new ResponsableV(null, null, null, null);
+
+        $responsableV->setNombreResponsable($datosResponsable[0]);
+        $responsableV->setApellidoResponsable($datosResponsable[1]);
+        $responsableV->setNumeroResponsable($datosResponsable[2]);
+        $responsableV->setLicenciaResponsable($datosResponsable[3]);
+
+        $this->setObjResponsableV($responsableV);
+    }
+
+    /* Método para mostrar la colección de objetos de pasajeros
+    * 
+    * @return string
+    * */
+    public function mensajePasajeros()
+    {
+        //$mensajeColPasa $separador string
+        //$colObjToString array
+
+        $colObjToString = $this->getColObjPasajeros();
+        $separador = "------------------------------------------------------\n";
+        $mensajeColPasa = "\n";
+
+        for ($i = 0; $i < count($colObjToString); $i++) {
+
+            $mensajeColPasa = $mensajeColPasa . "Pasajero " . $i+1 . 
+            $colObjToString[$i]->__toString() . $separador;
+        }
+
+        return $mensajeColPasa;
+    }
+
+    /* Método __toString
+    * 
+    * @return
+    * */
+    public function __toString()
+    {
+        //$mensaje $separador  string
+        $separador = "------------------------------------------------------";
+        $mensaje = "\nDatos del viaje:" .
+            "\nCódigo: " . $this->getCodigoViaje() .
+            "\nDestino: " . $this->getDestinoViaje() .
+            "\nCantidad máxima de pasajeros: " . $this->getCantidadMaxPasajeros() .
+            "\nPasajeros: \n" . $separador . $this->mensajePasajeros().
+            $this->getObjResponsableV()->__toString();
+
+        return $mensaje;
+    }
 }
