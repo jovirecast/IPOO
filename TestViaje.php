@@ -298,6 +298,18 @@ function modificadorViajes($viaje)
             $opcionPasajero = trim(fgets(STDIN));
             switch ($opcionPasajero) {
                 case 1:
+                    $listadoPasajeros = $viaje->getColObjPasajeros();
+                    menuPasajeros();
+                    $pasajeroNuevo = ingresarPasajero(1);
+                    $controlPasaNuevo = pasajeroRepetido($listadoPasajeros, $pasajeroNuevo[0]);
+                    while ($controlPasaNuevo == true) {
+                        $pasajeroNuevo = ingresarPasajero(1);
+                        $controlPasaNuevo = pasajeroRepetido($listadoPasajeros, $pasajeroNuevo[0]);
+                    }
+                    array_push($listadoPasajeros, $pasajeroNuevo[0]);
+                    $viaje->setColObjPasajeros($listadoPasajeros);
+                    echo "Pasajeros actuales:";
+                    echo $viaje->mensajePasajeros();
                     break;
                 case 2:
                     echo "¿Qué pasajero desea modificar?\n";
