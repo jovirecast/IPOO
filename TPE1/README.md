@@ -1,6 +1,6 @@
 # IPOO
 
-TPE (SIN TERMINAR)
+Trabajo Práctico Entregable 1
 
 Alumno: José Vicente Reyes Castelló
 
