@@ -1,0 +1,12 @@
+IPOO
+Introducción a la Programación Orientada a Objetos
+
+Segundo Parcial año 2024
+
+Alumno: José Vicente Reyes Castelló
+
+Legajo FAI-3220
+
+https://github.com/jovirecast/IPOO.git
+
+https://github.com/jovirecast/IPOO/tree/128548145bd56db0ffb4434713a860e4c934b4ab/Segundo%20Parcial%202024
