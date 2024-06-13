@@ -1,0 +1,5 @@
+En el archivo .zip se encuentra el enunciado y las clases que deben utilizar/modificar para la implementación del recuperatorio.
+
+Modifique el archivo dir_repo.txt para indicar el enlace al  repositorio donde se encuentran los script correspondientes a la implementación solicitada.
+
+Debe TAMBIEN subir en esta tarea un archivo rec_segundo_parcial.zip con la implementación solicitada.
